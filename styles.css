@@ -1,0 +1,1261 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Prompt', 'Sarabun', sans-serif;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    min-width: 320px; /* Prevent horizontal scroll on very small screens */
+    padding-left: env(safe-area-inset-left, 0);
+    padding-right: env(safe-area-inset-right, 0);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Prevent horizontal overflow on all elements */
+* {
+    max-width: 100%;
+}
+
+:root {
+    /* Chalkboard Theme Palette */
+    --primary-bg: #121212;
+    --secondary-bg: #191919;
+    --card-bg: #1f1f1f;
+    --accent-orange: #ff7a32;
+    --accent-green: #9be15d;
+    --accent-yellow: #ffd166;
+    --accent-white: #f5f5f5;
+    --text-primary: #f5f5f5;
+    --text-secondary: #c8c8c8;
+    --border-color: #2a2a2a;
+    --shadow-color: rgba(0, 0, 0, 0.45);
+    --gradient-primary: linear-gradient(135deg, #ff7a32, #ff9f1a);
+    --gradient-secondary: linear-gradient(135deg, #69d36e, #2eb872);
+}
+
+/* Body styles moved to top for better organization */
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* Mobile-first container widths that expand by breakpoint */
+@media (min-width: 480px) {
+    .container { padding: 0 20px; }
+}
+@media (min-width: 576px) {
+    .container { max-width: 540px; }
+}
+@media (min-width: 768px) {
+    .container { max-width: 720px; }
+}
+@media (min-width: 992px) {
+    .container { max-width: 960px; }
+}
+@media (min-width: 1200px) {
+    .container { max-width: 1140px; }
+}
+
+/* Typography */
+.section-title {
+    font-size: clamp(1.6rem, 2vw + 1rem, 2.5rem);
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+    color: var(--accent-white);
+    text-shadow: 0 2px 0 rgba(0,0,0,.6);
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 3rem;
+    font-weight: 300;
+}
+
+/* Header & Navigation */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    border-bottom: 1px solid var(--border-color);
+    width: 100%;
+    padding-top: env(safe-area-inset-top, 0);
+}
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    font-weight: 600;
+    color: var(--accent-white);
+    flex-shrink: 0;
+}
+
+.nav-brand i {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.brand-logo {
+    height: clamp(32px, 4.5vw, 56px);
+    width: auto;
+    border-radius: 6px;
+    box-shadow: 0 6px 14px rgba(0,0,0,.35);
+    display: block;
+}
+
+/* Prevent logo overflow and center it on very small screens */
+@media (max-width: 480px) {
+    .nav { justify-content: center; }
+    .nav-brand { justify-content: center; }
+    .brand-logo { max-width: 55vw; height: auto; }
+}
+
+/* Slight size bump on large desktops while staying crisp */
+@media (min-width: 1400px) {
+    .brand-logo { height: 60px; }
+}
+
+/* Prevent nav from wrapping awkwardly on narrow tablets */
+@media (max-width: 900px) {
+    .nav { padding: 0.8rem 1rem; }
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: clamp(1rem, 3vw, 2rem);
+    flex-wrap: wrap;
+}
+
+.nav-menu a {
+    color: var(--text-primary);
+    text-decoration: none;
+    font-weight: 400;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    transition: color 0.3s ease;
+    position: relative;
+    white-space: nowrap;
+}
+
+.nav-menu a:hover {
+    color: var(--accent-orange);
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+    transition: width 0.3s ease;
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+}
+
+.nav-toggle span {
+    width: 25px;
+    height: 3px;
+    background: var(--text-primary);
+    transition: 0.3s;
+}
+
+/* Mobile Navigation Active State */
+.nav-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.nav-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -6px);
+}
+
+/* Hero Section */
+.hero {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background: radial-gradient(ellipse at center, #1a1a1a 0%, #111 100%);
+    overflow: hidden;
+    padding: 5rem 1rem 2rem;
+    width: 100%;
+}
+
+/* Prefer dynamic viewport on iOS 16+ */
+@supports (height: 100dvh) {
+    .hero { min-height: 75dvh; }
+}
+
+/* Add top breathing room on small screens to avoid fixed header overlap */
+@media (max-width: 768px) {
+    .hero { 
+        padding: 4rem 1rem 2rem;
+        min-height: 60vh;
+    }
+    @supports (height: 100dvh) {
+        .hero { min-height: 60dvh; }
+    }
+}
+
+.hero-content {
+    text-align: center;
+    z-index: 2;
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    padding: 0 1rem;
+}
+
+.hero-title {
+    font-size: clamp(2.2rem, 5vw + 1rem, 4rem);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 1s ease-out;
+}
+
+.hero-subtitle {
+    font-size: clamp(1rem, 1.5vw + 0.6rem, 1.3rem);
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+    animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.hero-stats {
+    display: flex;
+    justify-content: center;
+    gap: clamp(1rem, 3vw, 2rem);
+    animation: fadeInUp 1s ease-out 0.4s both;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 3vw, 2rem);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    font-size: clamp(0.8rem, 2vw, 1rem);
+}
+
+.stat-item i {
+    color: var(--accent-orange);
+    font-size: 1.2rem;
+}
+
+/* Floating Fruits Animation */
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+}
+
+.floating-fruit {
+    position: absolute;
+    font-size: 6rem;
+    animation: float 6s ease-in-out infinite;
+    opacity: 0.1;
+}
+
+.fruit-1 {
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.fruit-2 {
+    top: 60%;
+    right: 15%;
+    animation-delay: 1.5s;
+}
+
+.fruit-3 {
+    bottom: 30%;
+    left: 20%;
+    animation-delay: 3s;
+}
+
+.fruit-4 {
+    top: 40%;
+    right: 30%;
+    animation-delay: 4.5s;
+}
+
+/* Menu Section */
+.menu-section {
+    padding: clamp(3rem, 8vw, 5rem) 0;
+    background: var(--secondary-bg);
+    width: 100%;
+}
+
+/* Fruit color strip accent (matches banner vibe) */
+.menu-section::before {
+    content: '';
+    display: block;
+    height: 10px;
+    background: var(--accent-orange);
+}
+
+/* บุฟเฟต์น้ำปั่น */
+.buffet-section {
+    background: var(--card-bg);
+    border-radius: 25px;
+    padding: clamp(2rem, 5vw, 3rem);
+    margin-bottom: clamp(2rem, 5vw, 4rem);
+    border: 2px solid var(--accent-orange);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
+
+.buffet-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-primary);
+}
+
+.buffet-title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: var(--accent-orange);
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.buffet-subtitle {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+}
+
+.buffet-price {
+    margin-bottom: 2rem;
+}
+
+.price-tag {
+    display: inline-block;
+    background: var(--gradient-primary);
+    color: white;
+    padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
+    border-radius: 50px;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.price-desc {
+    display: block;
+    color: var(--text-secondary);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.fruit-selection h4 {
+    color: var(--accent-green);
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+}
+
+/* กรอบรูปผลไม้ในบุฟเฟต์น้ำปั่น */
+.fruit-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: clamp(12px, 3vw, 20px);
+    margin-top: 12px;
+    width: 100%;
+}
+
+.fruit-item {
+    background: #fff7ed; /* โทนส้มอ่อน เหมือนพื้นหลัง */
+    border-radius: 18px;
+    padding: clamp(12px, 3vw, 18px) clamp(6px, 2vw, 8px) clamp(8px, 2vw, 10px) clamp(6px, 2vw, 8px);
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(255, 153, 51, 0.08);
+    transition: box-shadow 0.2s, border 0.2s;
+    border: 2px solid #ffe0b2;
+    width: 100%;
+}
+
+.fruit-item:hover {
+    box-shadow: 0 4px 16px rgba(255, 153, 51, 0.16);
+    border-color: #ffb74d;
+}
+
+.fruit-img {
+    width: clamp(60px, 12vw, 70px);
+    height: clamp(60px, 12vw, 70px);
+    object-fit: cover;
+    border-radius: 14px;
+    border: 2px solid #ffe0b2;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(255,153,51,0.10);
+    margin-bottom: 8px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    transition: border-color 0.2s;
+}
+
+.fruit-item:hover .fruit-img {
+    border-color: #ff9800;
+}
+
+.fruit-item span {
+    display: block;
+    font-size: clamp(0.8rem, 2vw, 1rem);
+    color: #d35400;
+    margin-top: 4px;
+    font-family: 'Prompt', 'Sarabun', sans-serif;
+    font-weight: 500;
+}
+
+/* Selected fruit state */
+.fruit-item.selected {
+    border-color: var(--accent-green);
+    background: linear-gradient(135deg, rgba(78, 205, 196, 0.12), rgba(68, 160, 141, 0.12));
+    box-shadow: 0 10px 20px var(--shadow-color);
+}
+
+/* เมนูเสริม */
+.extra-menu-section {
+    margin-top: clamp(2rem, 5vw, 4rem);
+    width: 100%;
+}
+
+.extra-title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: var(--accent-green);
+    text-align: center;
+    margin-bottom: clamp(2rem, 5vw, 3rem);
+    font-weight: 600;
+}
+
+/* Make extra menu cards a bit smaller and consistent */
+.extra-menu-section .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.extra-menu-section .menu-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    max-width: 320px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    padding: 18px 8px 12px 8px;
+    text-align: center;
+    transition: box-shadow 0.2s, border 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* เมนูเสริมพิเศษ: พื้นหลังกรอบเมนูดำ กรอบรูปขอบส้ม */
+.extra-menu-section .menu-card {
+    background: #232323;
+    border-radius: 18px;
+    box-shadow: 0 2px 12px rgba(44,44,44,0.12);
+    padding: 18px 8px 12px 8px;
+    text-align: center;
+    transition: box-shadow 0.2s, border 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.extra-menu-section .menu-image {
+    height: 180px;
+}
+
+/* กรอบรูปเมนูเสริมพิเศษ: ขอบส้มสด พื้นหลังดำ */
+.extra-menu-section .menu-image img {
+    border: 3px solid #ff9800;      /* ขอบส้มสด */
+    background: #232323;            /* ดำ */
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(255, 153, 51, 0.10); /* เงาส้มอ่อน */
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 12px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Hover: ขอบส้มเข้มขึ้น */
+.extra-menu-section .menu-card:hover .menu-image img {
+    border-color: #ff6f00;
+    box-shadow: 0 4px 24px rgba(255, 153, 51, 0.18);
+}
+
+/* กรอบรูปเมนูเสริมพิเศษ: ขอบเทาอ่อน พื้นหลังเทาเข้ม */
+.extra-menu-section .menu-image img {
+    border: 3px solid #bdbdbd;      /* ขอบเทาอ่อน */
+    background: #23272a;            /* เทาเข้ม */
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(44, 44, 44, 0.18); /* เงาเทา */
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 12px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Hover: ขอบเทาเข้มขึ้น */
+.extra-menu-section .menu-card:hover .menu-image img {
+    border-color: #757575;
+    box-shadow: 0 4px 24px rgba(44, 44, 44, 0.28);
+}
+
+/* Responsive: ปรับขนาดบนจอเล็ก */
+@media (max-width: 900px) {
+    .extra-menu-section .menu-image img {
+        width: 120px;
+        height: 120px;
+        max-height: 120px;
+    }
+}
+@media (max-width: 600px) {
+    .extra-menu-section .menu-image img {
+        width: 100px;
+        height: 100px;
+        max-height: 100px;
+    }
+}
+
+.extra-menu-section .menu-content {
+    padding: 1.4rem;
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.menu-image img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 14px;
+    border: 2px solid #ffe0b2;
+    background: #fff;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 4px rgba(255,153,51,0.08);
+    max-width: 100%;
+    max-height: 120px;
+}
+
+.menu-content h3 {
+    font-size: 1.05rem;
+    color: #d35400;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.menu-content .price {
+    color: #388e3c;
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.menu-content .description {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+/* Desktop: 3-4 columns */
+@media (min-width: 1200px) {
+    .extra-menu-section .menu-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+    .extra-menu-section .menu-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.75rem;
+    }
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 768px) and (max-width: 991px) {
+    .extra-menu-section .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    .extra-menu-section .menu-card {
+        max-width: 350px;
+    }
+    .extra-menu-section .menu-image {
+        height: 160px;
+    }
+    .extra-menu-section .menu-content {
+        padding: 1.2rem;
+    }
+}
+
+/* Mobile: 1 column */
+@media (max-width: 767px) {
+    .extra-menu-section .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    .extra-menu-section .menu-card {
+        max-width: 100%;
+    }
+    .extra-menu-section .menu-image {
+        height: 140px;
+    }
+    .extra-menu-section .menu-content {
+        padding: 1rem;
+    }
+}
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+/* Tablet refinement: allow slightly smaller cards to fit two per row comfortably */
+@media (max-width: 992px) {
+    .menu-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+}
+
+.menu-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--border-color);
+}
+
+.menu-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px var(--shadow-color);
+}
+
+.menu-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.menu-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.menu-card:hover .menu-image img {
+    transform: scale(1.1);
+}
+
+.menu-image.placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--card-bg), var(--border-color));
+    color: var(--text-secondary);
+    gap: 1rem;
+}
+
+.menu-image.placeholder i {
+    font-size: 3rem;
+    opacity: 0.5;
+}
+
+.menu-content {
+    padding: 1.5rem;
+}
+
+.menu-content h3 {
+    font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    margin-bottom: 0.5rem;
+    color: var(--accent-orange);
+}
+
+.price {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-weight: 600;
+    color: var(--accent-green);
+    margin-bottom: 0.5rem;
+}
+
+.description {
+    color: var(--text-secondary);
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+}
+
+/* Order Section */
+.order-section {
+    padding: clamp(3rem, 8vw, 5rem) 0;
+    background: var(--primary-bg);
+    width: 100%;
+}
+
+.order-form {
+    max-width: 800px;
+    margin: 0 auto;
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--primary-bg);
+    color: var(--text-primary);
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-orange);
+}
+
+/* บุฟเฟต์ออปชัน */
+.buffet-option {
+    margin-bottom: 2rem;
+}
+
+.menu-option.buffet {
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(247, 147, 30, 0.1));
+    border: 2px solid var(--accent-orange);
+    padding: 1.5rem;
+}
+
+.menu-option.buffet label {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.menu-option.buffet small {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.menu-category {
+    color: var(--accent-green);
+    margin: 2rem 0 1rem 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.menu-selection {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+/* Selected fruits summary */
+.selected-fruits-bar {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+    background: var(--primary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+.selected-fruits-title {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.6rem;
+    background: rgba(78, 205, 196, 0.15);
+    color: #c9f7f2;
+    border: 1px solid var(--accent-green);
+    border-radius: 999px;
+    font-size: 0.85rem;
+}
+
+.chip button {
+    background: transparent;
+    color: inherit;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1;
+}
+
+.menu-option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background: var(--primary-bg);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: border-color 0.3s ease;
+}
+
+.menu-option:hover {
+    border-color: var(--accent-orange);
+}
+
+.menu-option input[type="checkbox"] {
+    width: auto;
+    margin: 0;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 1rem 2rem;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+}
+
+/* Contact Section */
+.contact-section {
+    padding: clamp(3rem, 8vw, 5rem) 0;
+    background: var(--secondary-bg);
+    width: 100%;
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 3rem);
+    margin-top: 3rem;
+    width: 100%;
+}
+
+/* Stack contact columns earlier for better readability on tablets */
+@media (max-width: 900px) {
+    .contact-content { grid-template-columns: 1fr; }
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    background: var(--card-bg);
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    width: 100%;
+}
+
+.contact-item i {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    color: var(--accent-orange);
+    margin-top: 0.2rem;
+    flex-shrink: 0;
+}
+
+.contact-item h4 {
+    margin-bottom: 0.5rem;
+    color: var(--accent-green);
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
+}
+
+.facebook-link {
+    color: var(--accent-orange);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.facebook-link:hover {
+    text-decoration: underline;
+}
+
+.contact-form {
+    background: var(--card-bg);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+}
+
+/* Centered Contact Info */
+.contact-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+.contact-info-center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.contact-info-center .contact-item {
+    text-align: center;
+}
+
+/* Footer */
+.footer {
+    background: var(--primary-bg);
+    border-top: 1px solid var(--border-color);
+    padding: clamp(2rem, 5vw, 3rem) 0 1rem;
+    width: 100%;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: clamp(1.5rem, 4vw, 2rem);
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.footer-brand h3 {
+    color: var(--accent-orange);
+    margin-bottom: 0.5rem;
+    font-size: clamp(1.2rem, 3vw, 1.4rem);
+}
+
+.footer-brand i {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    color: var(--accent-orange);
+    margin-bottom: 1rem;
+}
+
+.footer-info p {
+    margin-bottom: 0.5rem;
+    color: var(--text-secondary);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1rem, 3vw, 1.5rem);
+    background: var(--gradient-secondary);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: transform 0.3s ease;
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.social-link:hover {
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+}
+
+/* Toast Notification */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: var(--gradient-primary);
+    color: white;
+    padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px var(--shadow-color);
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    z-index: 1001;
+    max-width: calc(100vw - 40px);
+    font-size: clamp(0.9rem, 2vw, 1rem);
+}
+
+.toast.show {
+    transform: translateX(0);
+}
+
+.toast-content {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 10, 0.98);
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        padding: 2rem;
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        border-top: 1px solid var(--border-color);
+        z-index: 999;
+    }
+    
+    .nav-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .nav-menu li {
+        margin: 1rem 0;
+    }
+    
+    .nav-menu a {
+        font-size: 1.2rem;
+        padding: 1rem 0;
+        display: block;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-toggle {
+        display: flex;
+    }
+    
+    .hero { min-height: 60vh; min-height: 60svh; }
+    .hero-title { font-size: 2.2rem; }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-content {
+        grid-template-columns: 1fr;
+    }
+    
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+        /* Extra menu responsive behavior is now handled by specific breakpoints above */
+    .extra-menu-section .menu-card {
+        width: 100%;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    /* บุฟเฟต์ Responsive */
+    .buffet-section {
+        padding: 2rem 1.5rem;
+        margin-bottom: 3rem;
+    }
+    
+    .buffet-title {
+        font-size: 1.5rem;
+    }
+    
+    .price-tag {
+        font-size: 1.5rem;
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .fruit-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 0.8rem;
+    }
+    
+    .fruit-item {
+        padding: 0.8rem;
+        font-size: 0.8rem;
+    }
+    /* Slightly smaller floating fruit on mobile */
+    .floating-fruit { font-size: 4rem; }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .nav {
+        padding: 1rem;
+    }
+    
+    .order-form,
+    .contact-form {
+        padding: 1.5rem;
+    }
+    /* Extra menu responsive behavior is now handled by specific breakpoints above */
+}
+
+/* Smooth Scrolling - moved to top for better organization */
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-orange);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-green);
+}
