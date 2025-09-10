@@ -509,10 +509,27 @@ img {
 /* Make extra menu cards a bit smaller and consistent */
 .extra-menu-section .menu-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 28px;
-    max-width: 1100px;
+    max-width: 1400px;
     margin: 0 auto;
+}
+
+/* Responsive: 2-3 เมนูต่อแถวบนจอเล็ก */
+@media (max-width: 1200px) {
+    .extra-menu-section .menu-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media (max-width: 800px) {
+    .extra-menu-section .menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+@media (max-width: 500px) {
+    .extra-menu-section .menu-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .extra-menu-section .menu-card {
@@ -648,8 +665,10 @@ img {
 /* Desktop: 3-4 columns */
 @media (min-width: 1200px) {
     .extra-menu-section .menu-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 2rem;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 28px;
+        max-width: 1400px;
+        margin: 0 auto;
     }
 }
 
